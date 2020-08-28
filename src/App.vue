@@ -3,12 +3,10 @@
         <transition :name="transitionName">
             <router-view/>
         </transition>
-        <tabbar></tabbar>
     </div>
 </template>
 
 <script>
-    import Tabbar from "@/components/Tabbar";
     export default {
         data() {
             return {
@@ -21,14 +19,12 @@
                     this.transitionName = "slide-left";
                 } else if (to.meta.index < form.meta.index) {
                     this.transitionName = "slide-right";
-                } else {
+                }
+                else {
                     this.transitionName = "";
                 }
             }
         },
-        components:{
-            Tabbar
-        }
     }
 </script>
 
@@ -58,7 +54,7 @@
     .slide-right-enter-active,
     .slide-right-leave-active {
         height: 100%;
-        will-change: transform;
+        /*will-change: transform;*/
         transition: all 500ms;
         position: absolute;
         backface-visibility: hidden;

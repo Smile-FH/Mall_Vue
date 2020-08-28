@@ -21,13 +21,17 @@
             <van-cell title="地址管理" is-link center />
             <van-cell title="关于商城" is-link center />
         </van-cell-group>
+        <tabbar></tabbar>
     </div>
 </template>
 
 <script>
+    import Tabbar from "@/components/Tabbar";
     export default {
         name: "User",
-        components: {}
+        components: {
+            Tabbar
+        }
     }
 </script>
 
