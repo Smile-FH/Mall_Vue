@@ -1,5 +1,5 @@
 <template>
-    <div class="home" style="position:relative">
+    <div class="home">
         <header class="home-head" :class="{'active': isActive }">
             <router-link tag="i" to="/classify">
                 <svg class="icon home-classify-ico" aria-hidden="true">
@@ -11,7 +11,7 @@
                 <i class="icon-search">|</i>
                 <router-link tag="span" to="/search" class="search-title">多学点再多学点！</router-link>
             </div>
-            <router-link class="login" to="#" tag="span" v-if="!isLogin" >登录</router-link>
+            <router-link class="login" to="/login" tag="span" v-if="!isLogin" >登录</router-link>
             <router-link class="login" to="#" tag="span" v-else>
                 <van-icon class="icon" name="manager"></van-icon>
             </router-link>

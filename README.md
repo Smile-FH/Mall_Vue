@@ -39,3 +39,5 @@ Description：后台的轮播图管理，用户管理，基本开发完毕，接
 8. vuex的应用，vuex的原理是啥？vuex和store的区别是啥？
 9. [前端验证时你必须知道的session、cookie、token的发展史](https://zhuanlan.zhihu.com/p/63061864)
 10. [首页开发时遇到的文字截断问题,解决方法](https://juejin.im/post/6844903795659390983)
+11. [token在客户端的存储位置是localStorage,这是为什么呢？存在cookie中不可以吗？](https://blog.csdn.net/weixin_42614080/article/details/90706499)
+12. [Vue中子组件的样式覆盖问题](https://www.cnblogs.com/webARM/p/12443518.html)

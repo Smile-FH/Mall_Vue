@@ -1,7 +1,7 @@
 <template>
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="#1BAEAE">
         <van-swipe-item v-for="(item, index) in imagesUrl" :key="index" class="box">
-                <img v-lazy="item.carouselUrl" class="a" :alt="item.carouselUrl" >
+                <img v-lazy="item.carouselUrl" class="a" :alt="item.carouselUrl" @click="goTo(item.redirectUrl)">
         </van-swipe-item>
     </van-swipe>
 </template>
@@ -14,6 +14,11 @@
                 type: Array,
             }
         },
+        methods: {
+            goTo(url){
+                window.open(url);
+            }
+        }
     }
 </script>
 
