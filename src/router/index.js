@@ -5,7 +5,8 @@ import User from "@/views/User";
 import Classify from "@/views/Classify";
 import Cart from "@/views/Cart";
 import Search from "@/views/Search";
-import Login from "@/views/Login"
+import Login from "@/views/Login";
+import Settings from "@/views/Settings";
 
 Vue.use(VueRouter);
 
@@ -66,6 +67,14 @@ const routes = [
       index: 2
     }
   },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: () => import(/* webpackChunkName: "user" */ "@/views/Settings"),
+    meta: {
+      index: 2
+    }
+  }
 ];
 
 const router = new VueRouter({

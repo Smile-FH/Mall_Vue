@@ -12,7 +12,7 @@
                 <router-link tag="span" to="/search" class="search-title">多学点再多学点！</router-link>
             </div>
             <router-link class="login" to="/login" tag="span" v-if="!isLogin" >登录</router-link>
-            <router-link class="login" to="#" tag="span" v-else>
+            <router-link class="login" to="/user" tag="span" v-else>
                 <van-icon class="icon" name="manager"></van-icon>
             </router-link>
         </header>
@@ -71,6 +71,7 @@
     import Tabbar from "@/components/Tabbar";
     import Swiper from "@/components/Swiper";
     import { getIndexInfo } from "@/service/home";
+    import { getLocal } from "@/common/js/util";
 
     export default {
         name: "Home",
@@ -154,6 +155,10 @@
             }
         },
         async mounted() {
+            const token = getLocal('token');
+            if (token){
+                this.isLogin = true;
+            }
             window.addEventListener("scroll", this.pageScroll);
             const { data } = await getIndexInfo();
             this.imagesUrl = data.indexCarouselVOS;

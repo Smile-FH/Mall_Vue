@@ -9,17 +9,17 @@
               </svg>
             </span>
             <div class="info-details">
-                <span>昵称：</span>
-                <span>登录账号：</span>
-                <span>个签：</span>
+                <span>昵称：{{ user.nickName }}</span>
+                <span>登录账号：{{ user.loginName }}</span>
+                <span>个签：{{ user.introduceSign }}</span>
             </div>
         </div>
 
         <van-cell-group title="个人">
             <van-cell title="我的订单" is-link center />
-            <van-cell title="账号管理" is-link center />
+            <van-cell title="账号管理" is-link center to="/settings"/>
             <van-cell title="地址管理" is-link center />
-            <van-cell title="关于商城" is-link center />
+            <van-cell title="关于商城" is-link center to="/about"/>
         </van-cell-group>
         <tabbar></tabbar>
     </div>
@@ -27,10 +27,24 @@
 
 <script>
     import Tabbar from "@/components/Tabbar";
+    import { getInfo } from "@/service/user";
+
     export default {
         name: "User",
+        data(){
+            return {
+                user:{},
+            }
+        },
         components: {
             Tabbar
+        },
+        async mounted() {
+            const { data } = await getInfo();
+            this.user = data;
+        },
+        methods:{
+
         }
     }
 </script>
@@ -60,6 +74,10 @@
             flex-direction: column;
             font-weight: bold;
             color: white;
+
+            span {
+                font-size: 14px;
+            }
         }
     }
 

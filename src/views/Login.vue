@@ -1,10 +1,10 @@
 <template>
     <div style="position: relative" class="login">
         <!--        login Header-->
-        <van-nav-bar :title="isRegister? '注册' : '登录'" left-text="返回" left-arrow right-text="···" @click-left="goback"></van-nav-bar>
+        <simple-header :title="isRegister? '注册' : '登录'" left-text="返回" right-text="" @leftClick="goback"></simple-header>
 
-        <div class="login-body">
-            <van-form v-if="!isRegister">
+        <div class="login-body" >
+            <van-form v-if="!isRegister" @submit="onSubmit(0)">
                 <van-field
                         v-model="username"
                         name="userName"
@@ -21,14 +21,14 @@
                         :rules="[{ required: true, message: '请填写密码' }]"
                 />
                 <div class="verify">
-                    <verify type="compute" @error="error" @success="success" :show-button="false" width="100%"></verify>
+                    <verify ref="loginVerifyRef" type="compute"  @error="error()" @success="success()" :show-button="false" width="100%"></verify>
                 </div>
                 <div style="margin: 16px;">
                     <div class="link-register" @click="toTag">立即注册</div>
-                    <van-button round block type="info" native-type="button">提交</van-button>
+                    <van-button round block type="info" native-type="submit" @keydown.enter="onSubmit(0)">登录</van-button>
                 </div>
             </van-form>
-            <van-form v-else>
+            <van-form v-else @submit="onSubmit(1)">
                 <van-field
                         v-model="username"
                         name="userName"
@@ -45,11 +45,11 @@
                         :rules="[{ required: true, message: '请填写密码' }]"
                 />
                 <div class="verify">
-                    <verify type="compute" @error="error" @success="success" :show-button="false" width="100%"></verify>
+                    <verify ref="loginVerifyRef" type="compute" @error="error('error')" :show-button="false" @success="success('success')" width="100%"></verify>
                 </div>
                 <div style="margin: 16px;">
                     <div class="link-register" @click="toTag">去登录</div>
-                    <van-button round block type="info" native-type="button">注册</van-button>
+                    <van-button round block type="info" native-type="submit" @keydown.enter="onSubmit(1)">注册</van-button>
                 </div>
             </van-form>
         </div>
@@ -59,6 +59,10 @@
 
 <script>
     import Verify from "vue2-verify";
+    import SimpleHeader from "@/components/SimpleHeader";
+    import { Toast } from "vant";
+    import { setLocal } from "@/common/js/util";
+    import { login } from "@/service/user";
 
     export default {
         name: "Login",
@@ -66,26 +70,64 @@
             return {
                 username: "",
                 password: "",
-                isRegister: false
+                isRegister: false,
+                lastPath:"",
+                verify: false,
             }
         },
-        components: {
-            Verify
+        beforeRouteEnter (to, form, next){
+            next( vm=>{
+                vm.lastPath = form.path;
+                console.log(vm.lastPath);
+            })
         },
+        components: {
+            Verify,
+            SimpleHeader
+        },
+
         methods: {
+            verifyCheck(){
+                this.$refs.loginVerifyRef.$refs.instance.checkCode();
+            },
+            verifyRefresh(){
+                this.$refs.loginVerifyRef.$refs.instance.refresh();
+            },
             goback() {
+                if (window.history.length===1) {
+                    this.$router.replace("/")
+                }
                 this.$router.go(-1);
             },
-            success() {
-                console.log("验证成功了");
+            success:function() {
+                this.verify = true;
             },
-            error(){
-                console.log("验证失败");
+            error:function(){
+                this.verify = false;
             },
             toTag(){
                 this.isRegister = !this.isRegister;
-                console.log("点击了立即注册");
-                this.error();
+                this.verifyRefresh();
+            },
+            async onSubmit(value){
+                this.verifyCheck();
+                let verifyValue = this.verify;
+                if (!verifyValue){
+                    Toast.fail("验证码没填写，或 验证码错了！");
+                } else {
+                    // value为0 的时候走else方法
+                    if (value){
+                        Toast.fail("走注册方法");
+                    } else {
+                        const { data } = await login({
+                            "loginName": this.username,
+                            "passwordMD5": this.$md5(this.password)
+                        });
+                        setLocal("token", data);
+                        window.location.href = '/';
+                    }
+                }
+                this.verifyRefresh();
             }
         },
     }
@@ -134,6 +176,25 @@
                 color: #1989fa;
                 margin-bottom: 20px;
                 font-size: 16px;
+                width: 75px;
+            }
+
+            /deep/ .van-field__body {
+                border: 1px solid #1989fa;
+
+                input:-webkit-autofill,
+                input:-webkit-autofill:hover,
+                input:-webkit-autofill:focus,
+                textarea:-webkit-autofill,
+                textarea:-webkit-autofill:hover,
+                textarea:-webkit-autofill:focus,
+                select:-webkit-autofill,
+                select:-webkit-autofill:hover,
+                select:-webkit-autofill:focus {
+                    -webkit-text-fill-color: #000;
+                    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+                    transition: background-color 5000s ease-in-out 0s;
+                }
             }
         }
     }
