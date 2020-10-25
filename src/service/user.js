@@ -11,3 +11,7 @@ export function login(params) {
 export function logout() {
     return axios.delete("/user");
 }
+
+export function editInfo(params) {
+    return axios.put("/user",params);
+}

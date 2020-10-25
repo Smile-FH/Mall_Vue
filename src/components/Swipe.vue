@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: "Swiper",
+        name: "Swipe",
         props: {
             imagesUrl: {
                 type: Array,

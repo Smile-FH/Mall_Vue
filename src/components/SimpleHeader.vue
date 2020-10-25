@@ -14,7 +14,7 @@
         <div class="right-space" @click="rightFunction()">
             <span>{{rightText}}</span>
             <slot name="rightIcon">
-                ···
+<!--                ···-->
             </slot>
         </div>
     </header>
@@ -46,7 +46,6 @@
                 this.$emit("leftClick");
             },
             rightFunction: function () {
-                console.log("点击了右边的图标");
                 this.$emit("rightClick");
             }
         }

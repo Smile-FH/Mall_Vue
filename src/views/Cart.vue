@@ -1,16 +1,16 @@
 <template>
     <div>
         <h1>This is an cart page</h1>
-        <tabbar></tabbar>
+        <mall-tab-bar />
     </div>
 </template>
 
 <script>
-    import Tabbar from "@/components/Tabbar";
+    import MallTabBar from "@/components/MallTabBar";
     export default {
         name: "Cart",
         components: {
-            Tabbar
+            MallTabBar
         }
     }
 </script>

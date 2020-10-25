@@ -1,7 +1,7 @@
 <template>
     <div style="position: relative" class="login">
         <!--        login Header-->
-        <simple-header :title="isRegister? '注册' : '登录'" left-text="返回" right-text="" @leftClick="goback"></simple-header>
+        <simple-header :title="isRegister? '注册' : '登录'" left-text="返回" right-text="" @leftClick="goBack"></simple-header>
 
         <div class="login-body" >
             <van-form v-if="!isRegister" @submit="onSubmit(0)">
@@ -53,7 +53,6 @@
                 </div>
             </van-form>
         </div>
-
     </div>
 </template>
 
@@ -78,7 +77,6 @@
         beforeRouteEnter (to, form, next){
             next( vm=>{
                 vm.lastPath = form.path;
-                console.log(vm.lastPath);
             })
         },
         components: {
@@ -93,7 +91,7 @@
             verifyRefresh(){
                 this.$refs.loginVerifyRef.$refs.instance.refresh();
             },
-            goback() {
+            goBack() {
                 if (window.history.length===1) {
                     this.$router.replace("/")
                 }

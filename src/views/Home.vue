@@ -16,8 +16,8 @@
                 <van-icon class="icon" name="manager"></van-icon>
             </router-link>
         </header>
-        <swiper :images-url="imagesUrl"></swiper>
-        <tabbar></tabbar>
+        <swipe :images-url="imagesUrl" />
+        <mall-tab-bar />
 
         <div class="category-list">
             <div v-for="item of categoryList" :key="item.categoryId" class="">
@@ -68,16 +68,16 @@
 </template>
 
 <script>
-    import Tabbar from "@/components/Tabbar";
-    import Swiper from "@/components/Swiper";
+    import MallTabBar from "@/components/MallTabBar";
+    import Swipe from "@/components/Swipe";
     import { getIndexInfo } from "@/service/home";
     import { getLocal } from "@/common/js/util";
 
     export default {
         name: "Home",
         components: {
-            Tabbar,
-            Swiper
+            MallTabBar,
+            Swipe
         },
         data() {
             return {

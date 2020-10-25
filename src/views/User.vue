@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Tabbar from "@/components/Tabbar";
+    import Tabbar from "@/components/MallTabBar";
     import { getInfo } from "@/service/user";
 
     export default {
